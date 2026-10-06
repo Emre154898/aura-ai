@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aura-ai-2kl2.onrender.com/sitemap.xml

@@ -22,6 +22,10 @@ HTML = """
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Aura AI</title>
+<meta name="description" content="Aura AI - Emre Şentürk tarafından geliştirilen hızlı ve Türkçe yapay zeka asistanı.">
+<meta name="keywords" content="Aura AI, yapay zeka, AI asistan, Türkçe yapay zeka, Emre Şentürk">
+<meta name="robots" content="index, follow">
+
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">
