@@ -602,15 +602,127 @@ body::after {
         transform: translate(-80px, -60px);
     }
 }</style>
+
+<style>
+.aura-circle{
+    position:fixed;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:0;
+    border:3px solid rgba(150,70,255,.5);
+    box-shadow:0 0 35px rgba(130,60,255,.5), inset 0 0 35px rgba(0,180,255,.25);
+    animation:auraMove 7s ease-in-out infinite alternate;
+}
+.c1{width:380px;height:380px;left:5%;top:15%}
+.c2{width:260px;height:260px;right:8%;top:35%;border-color:rgba(0,190,255,.5);animation-delay:2s}
+.c3{width:180px;height:180px;left:45%;bottom:8%;border-color:rgba(210,70,255,.45);animation-delay:4s}
+
+@keyframes auraMove{
+    from{transform:scale(1) translate(0,0);opacity:.45}
+    to{transform:scale(1.15) translate(25px,-20px);opacity:.8}
+}
+</style>
+
+<style>
+.ai .avatar{
+    position:relative;
+    border-radius:50%;
+    background:radial-gradient(circle,#7b35ff,#241044);
+    box-shadow:
+        0 0 12px #8b45ff,
+        0 0 30px #5b2cff,
+        0 0 55px rgba(0,180,255,.7);
+    animation:auraPulse 2s ease-in-out infinite alternate;
+}
+
+.ai .avatar::before,
+.ai .avatar::after{
+    content:"";
+    position:absolute;
+    inset:-6px;
+    border-radius:50%;
+    border:2px solid rgba(150,70,255,.8);
+    animation:auraRing 2.5s linear infinite;
+}
+
+.ai .avatar::after{
+    inset:-12px;
+    border-color:rgba(0,190,255,.55);
+    animation-delay:-1.2s;
+}
+
+@keyframes auraRing{
+    0%{transform:scale(.85);opacity:.9}
+    100%{transform:scale(1.35);opacity:0}
+}
+
+@keyframes auraPulse{
+    from{box-shadow:0 0 12px #8b45ff,0 0 25px #5b2cff}
+    to{box-shadow:0 0 20px #b45cff,0 0 45px #008cff}
+}
+</style>
+
+<style>
+.aura-logo{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:radial-gradient(circle,#8b3dff,#241044);
+    box-shadow:0 0 15px #8b45ff,0 0 35px rgba(0,180,255,.7);
+}
+
+.logo-ring{
+    position:absolute;
+    border-radius:50%;
+    border:2px solid;
+    pointer-events:none;
+    animation:logoAura 2.5s linear infinite;
+}
+
+.ring1{
+    inset:-5px;
+    border-color:rgba(170,70,255,.8);
+}
+
+.ring2{
+    inset:-11px;
+    border-color:rgba(0,190,255,.65);
+    animation-delay:-.8s;
+}
+
+.ring3{
+    inset:-17px;
+    border-color:rgba(210,60,255,.45);
+    animation-delay:-1.6s;
+}
+
+@keyframes logoAura{
+    0%{transform:scale(.85);opacity:1}
+    100%{transform:scale(1.35);opacity:0}
+}
+</style>
 </head>
 
 <body>
 <canvas id="bg"></canvas>
+<div class="aura-circle c1"></div>
+<div class="aura-circle c2"></div>
+<div class="aura-circle c3"></div>
+
 
 <div class="app">
 
 <header>
-<span class="logo">✨</span>
+<span class="logo aura-logo">
+    <span class="logo-ring ring1"></span>
+    <span class="logo-ring ring2"></span>
+    <span class="logo-ring ring3"></span>
+    ✨
+</span>
 Aura
 </header>
 
