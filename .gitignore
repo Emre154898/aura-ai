@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+*.db
+*.zip
+app*.yedek*
+app_backup.py
+app_before_gemini.py
+app_ollama_backup.py
+vosk-model-small-tr-0.3/
+.env
