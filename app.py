@@ -34,6 +34,163 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-
 
 <style>
 #bg{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:-1;
+
+    background:
+        radial-gradient(circle at 15% 20%, rgba(124,58,237,.35), transparent 30%),
+        radial-gradient(circle at 85% 75%, rgba(0,180,255,.25), transparent 30%),
+        radial-gradient(circle at 50% 50%, rgba(80,40,180,.12), transparent 45%),
+        linear-gradient(135deg,#02030a,#09051a,#020711);
+
+    overflow:hidden;
+}
+
+#bg::before{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    background:#743cff;
+    filter:blur(140px);
+    opacity:.18;
+    left:-180px;
+    top:-180px;
+    animation:aura1 10s ease-in-out infinite alternate;
+}
+
+#bg::after{
+    content:"";
+    position:absolute;
+    width:450px;
+    height:450px;
+    border-radius:50%;
+    background:#009dff;
+    filter:blur(140px);
+    opacity:.15;
+    right:-150px;
+    bottom:-150px;
+    animation:aura2 12s ease-in-out infinite alternate;
+}
+
+@keyframes aura1{
+    to{transform:translate(120px,80px) scale(1.2);}
+}
+
+@keyframes aura2{
+    to{transform:translate(-100px,-70px) scale(1.2);}
+}
+</style><style>
+#bg{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:-1;
+
+    background:
+        radial-gradient(circle at 15% 20%, rgba(124,58,237,.35), transparent 30%),
+        radial-gradient(circle at 85% 75%, rgba(0,180,255,.25), transparent 30%),
+        radial-gradient(circle at 50% 50%, rgba(80,40,180,.12), transparent 45%),
+        linear-gradient(135deg,#02030a,#09051a,#020711);
+
+    overflow:hidden;
+}
+
+#bg::before{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    background:#743cff;
+    filter:blur(140px);
+    opacity:.18;
+    left:-180px;
+    top:-180px;
+    animation:aura1 10s ease-in-out infinite alternate;
+}
+
+#bg::after{
+    content:"";
+    position:absolute;
+    width:450px;
+    height:450px;
+    border-radius:50%;
+    background:#009dff;
+    filter:blur(140px);
+    opacity:.15;
+    right:-150px;
+    bottom:-150px;
+    animation:aura2 12s ease-in-out infinite alternate;
+}
+
+@keyframes aura1{
+    to{transform:translate(120px,80px) scale(1.2);}
+}
+
+@keyframes aura2{
+    to{transform:translate(-100px,-70px) scale(1.2);}
+}
+</style><style>
+#bg{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:-1;
+
+    background:
+        radial-gradient(circle at 15% 20%, rgba(124,58,237,.35), transparent 30%),
+        radial-gradient(circle at 85% 75%, rgba(0,180,255,.25), transparent 30%),
+        radial-gradient(circle at 50% 50%, rgba(80,40,180,.12), transparent 45%),
+        linear-gradient(135deg,#02030a,#09051a,#020711);
+
+    overflow:hidden;
+}
+
+#bg::before{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    background:#743cff;
+    filter:blur(140px);
+    opacity:.18;
+    left:-180px;
+    top:-180px;
+    animation:aura1 10s ease-in-out infinite alternate;
+}
+
+#bg::after{
+    content:"";
+    position:absolute;
+    width:450px;
+    height:450px;
+    border-radius:50%;
+    background:#009dff;
+    filter:blur(140px);
+    opacity:.15;
+    right:-150px;
+    bottom:-150px;
+    animation:aura2 12s ease-in-out infinite alternate;
+}
+
+@keyframes aura1{
+    to{transform:translate(120px,80px) scale(1.2);}
+}
+
+@keyframes aura2{
+    to{transform:translate(-100px,-70px) scale(1.2);}
+}
+</style>
+<style>
+#bg{
 position:fixed;
 inset:0;
 width:100%;
@@ -216,7 +373,235 @@ header{padding:0 15px}
 .message{gap:9px}
 .avatar{width:30px;height:30px;min-width:30px}
 }
-</style>
+body {
+    background:
+        radial-gradient(circle at 15% 20%, rgba(115, 60, 255, .35), transparent 30%),
+        radial-gradient(circle at 85% 75%, rgba(0, 180, 255, .25), transparent 30%),
+        linear-gradient(135deg, #03030b, #0b0620, #020711);
+
+    background-attachment: fixed;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    left: -150px;
+    top: -150px;
+    border-radius: 50%;
+    background: #6c2cff;
+    filter: blur(150px);
+    opacity: .18;
+    pointer-events: none;
+    animation: auraFloat 10s ease-in-out infinite alternate;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 450px;
+    height: 450px;
+    right: -120px;
+    bottom: -150px;
+    border-radius: 50%;
+    background: #008cff;
+    filter: blur(150px);
+    opacity: .15;
+    pointer-events: none;
+    animation: auraFloat2 12s ease-in-out infinite alternate;
+}
+
+@keyframes auraFloat {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(100px, 70px);
+    }
+}
+
+@keyframes auraFloat2 {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(-80px, -60px);
+    }
+body {
+    background:
+        radial-gradient(circle at 15% 20%, rgba(115, 60, 255, .35), transparent 30%),
+        radial-gradient(circle at 85% 75%, rgba(0, 180, 255, .25), transparent 30%),
+        linear-gradient(135deg, #03030b, #0b0620, #020711);
+
+    background-attachment: fixed;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    left: -150px;
+    top: -150px;
+    border-radius: 50%;
+    background: #6c2cff;
+    filter: blur(150px);
+    opacity: .18;
+    pointer-events: none;
+    animation: auraFloat 10s ease-in-out infinite alternate;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 450px;
+    height: 450px;
+    right: -120px;
+    bottom: -150px;
+    border-radius: 50%;
+    background: #008cff;
+    filter: blur(150px);
+    opacity: .15;
+    pointer-events: none;
+    animation: auraFloat2 12s ease-in-out infinite alternate;
+}
+
+@keyframes auraFloat {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(100px, 70px);
+    }
+}
+
+@keyframes auraFloat2 {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(-80px, -60px);
+    }
+}body {
+    background:
+        radial-gradient(circle at 15% 20%, rgba(115, 60, 255, .35), transparent 30%),
+        radial-gradient(circle at 85% 75%, rgba(0, 180, 255, .25), transparent 30%),
+        linear-gradient(135deg, #03030b, #0b0620, #020711);
+
+    background-attachment: fixed;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    left: -150px;
+    top: -150px;
+    border-radius: 50%;
+    background: #6c2cff;
+    filter: blur(150px);
+    opacity: .18;
+    pointer-events: none;
+    animation: auraFloat 10s ease-in-out infinite alternate;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 450px;
+    height: 450px;
+    right: -120px;
+    bottom: -150px;
+    border-radius: 50%;
+    background: #008cff;
+    filter: blur(150px);
+    opacity: .15;
+    pointer-events: none;
+    animation: auraFloat2 12s ease-in-out infinite alternate;
+}
+
+@keyframes auraFloat {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(100px, 70px);
+    }
+}
+
+@keyframes auraFloat2 {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(-80px, -60px);
+    }
+}body {
+    background:
+        radial-gradient(circle at 15% 20%, rgba(115, 60, 255, .35), transparent 30%),
+        radial-gradient(circle at 85% 75%, rgba(0, 180, 255, .25), transparent 30%),
+        linear-gradient(135deg, #03030b, #0b0620, #020711);
+
+    background-attachment: fixed;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    left: -150px;
+    top: -150px;
+    border-radius: 50%;
+    background: #6c2cff;
+    filter: blur(150px);
+    opacity: .18;
+    pointer-events: none;
+    animation: auraFloat 10s ease-in-out infinite alternate;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 450px;
+    height: 450px;
+    right: -120px;
+    bottom: -150px;
+    border-radius: 50%;
+    background: #008cff;
+    filter: blur(150px);
+    opacity: .15;
+    pointer-events: none;
+    animation: auraFloat2 12s ease-in-out infinite alternate;
+}
+
+@keyframes auraFloat {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(100px, 70px);
+    }
+}
+
+@keyframes auraFloat2 {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(-80px, -60px);
+    }
+}</style>
 </head>
 
 <body>
@@ -281,9 +666,7 @@ vy:(Math.random()-.5)*.35,
 r:Math.random()*2+1
 });
 }
-}
-
-function animate(){
+}function animate(){
 
 ctx.clearRect(0,0,canvas.width,canvas.height);
 
@@ -348,7 +731,64 @@ return html;
 
 function copyCode(button){
 
-const code=button.parentElement.querySelector("code").innerText;
+cbody {
+    background:
+        radial-gradient(circle at 15% 20%, rgba(115, 60, 255, .35), transparent 30%),
+        radial-gradient(circle at 85% 75%, rgba(0, 180, 255, .25), transparent 30%),
+        linear-gradient(135deg, #03030b, #0b0620, #020711);
+
+    background-attachment: fixed;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    left: -150px;
+    top: -150px;
+    border-radius: 50%;
+    background: #6c2cff;
+    filter: blur(150px);
+    opacity: .18;
+    pointer-events: none;
+    animation: auraFloat 10s ease-in-out infinite alternate;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 450px;
+    height: 450px;
+    right: -120px;
+    bottom: -150px;
+    border-radius: 50%;
+    background: #008cff;
+    filter: blur(150px);
+    opacity: .15;
+    pointer-events: none;
+    animation: auraFloat2 12s ease-in-out infinite alternate;
+}
+
+@keyframes auraFloat {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(100px, 70px);
+    }
+}
+
+@keyframes auraFloat2 {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(-80px, -60px);
+    }
+}onst code=button.parentElement.querySelector("code").innerText;
 
 navigator.clipboard.writeText(code);
 
