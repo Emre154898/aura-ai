@@ -843,64 +843,7 @@ return html;
 
 function copyCode(button){
 
-cbody {
-    background:
-        radial-gradient(circle at 15% 20%, rgba(115, 60, 255, .35), transparent 30%),
-        radial-gradient(circle at 85% 75%, rgba(0, 180, 255, .25), transparent 30%),
-        linear-gradient(135deg, #03030b, #0b0620, #020711);
-
-    background-attachment: fixed;
-    position: relative;
-    overflow-x: hidden;
-}
-
-body::before {
-    content: "";
-    position: fixed;
-    width: 500px;
-    height: 500px;
-    left: -150px;
-    top: -150px;
-    border-radius: 50%;
-    background: #6c2cff;
-    filter: blur(150px);
-    opacity: .18;
-    pointer-events: none;
-    animation: auraFloat 10s ease-in-out infinite alternate;
-}
-
-body::after {
-    content: "";
-    position: fixed;
-    width: 450px;
-    height: 450px;
-    right: -120px;
-    bottom: -150px;
-    border-radius: 50%;
-    background: #008cff;
-    filter: blur(150px);
-    opacity: .15;
-    pointer-events: none;
-    animation: auraFloat2 12s ease-in-out infinite alternate;
-}
-
-@keyframes auraFloat {
-    from {
-        transform: translate(0, 0);
-    }
-    to {
-        transform: translate(100px, 70px);
-    }
-}
-
-@keyframes auraFloat2 {
-    from {
-        transform: translate(0, 0);
-    }
-    to {
-        transform: translate(-80px, -60px);
-    }
-}onst code=button.parentElement.querySelector("code").innerText;
+const code=button.parentElement.querySelector("code").innerText;
 
 navigator.clipboard.writeText(code);
 
