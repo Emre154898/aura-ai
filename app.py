@@ -55,8 +55,13 @@ def tts():
     filename = f"/tmp/aura_{uuid.uuid4().hex}.mp3"
 
     async def generate():
-        voice = "tr-TR-AhmetNeural"
-        communicate = edge_tts.Communicate(text, voice)
+        voice = "tr-TR-EmelNeural"
+        communicate = edge_tts.Communicate(
+            text,
+            voice,
+            rate="+15%",
+            pitch="+0Hz"
+        )
         await communicate.save(filename)
 
     import asyncio
