@@ -2,3 +2,4 @@ Flask
 groq
 gunicorn
 requests
+edge-tts
