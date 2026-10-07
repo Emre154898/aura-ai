@@ -1364,6 +1364,855 @@ chat.scrollTop=chat.scrollHeight;
 }
 </script>
 
+
+<!-- AURA_UI_UPGRADE_V1 -->
+
+<style>
+
+#auraSide{
+position:fixed;
+left:0;
+top:0;
+bottom:0;
+width:280px;
+background:#15161a;
+border-right:1px solid #292a2f;
+z-index:9998;
+display:flex;
+flex-direction:column;
+transform:translateX(-100%);
+transition:.2s;
+}
+
+#auraSide.open{
+transform:translateX(0);
+}
+
+#auraSideHead{
+padding:16px;
+display:flex;
+align-items:center;
+gap:8px;
+border-bottom:1px solid #292a2f;
+}
+
+#auraSideHead button{
+border:0;
+background:#292a2f;
+color:white;
+border-radius:9px;
+padding:9px 12px;
+cursor:pointer;
+}
+
+#auraChats{
+flex:1;
+overflow:auto;
+padding:8px;
+}
+
+.aura-chat{
+display:flex;
+align-items:center;
+gap:8px;
+padding:11px;
+border-radius:10px;
+cursor:pointer;
+color:#ddd;
+margin-bottom:3px;
+}
+
+.aura-chat:hover{
+background:#25262b;
+}
+
+.aura-chat.active{
+background:#2b2d33;
+}
+
+.aura-chat-name{
+flex:1;
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;
+}
+
+.aura-chat-btn{
+border:0;
+background:transparent;
+color:#888;
+cursor:pointer;
+font-size:15px;
+}
+
+#auraBottom{
+padding:10px;
+border-top:1px solid #292a2f;
+}
+
+#auraToolsButton{
+width:100%;
+border:0;
+background:#25262b;
+color:white;
+padding:12px;
+border-radius:10px;
+cursor:pointer;
+}
+
+#auraMenu{
+position:fixed;
+left:12px;
+bottom:65px;
+width:280px;
+background:#191a1e;
+border:1px solid #34353a;
+border-radius:16px;
+padding:8px;
+z-index:99999;
+display:none;
+box-shadow:0 15px 50px rgba(0,0,0,.5);
+}
+
+#auraMenu.open{
+display:block;
+}
+
+.aura-tool{
+width:100%;
+border:0;
+background:transparent;
+color:#eee;
+padding:12px;
+border-radius:10px;
+text-align:left;
+cursor:pointer;
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+.aura-tool:hover{
+background:#292a2f;
+}
+
+.aura-tool-icon{
+font-size:19px;
+width:28px;
+}
+
+#auraModal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.65);
+z-index:100000;
+display:none;
+align-items:center;
+justify-content:center;
+}
+
+#auraModal.open{
+display:flex;
+}
+
+#auraModalBox{
+width:min(500px,90%);
+max-height:80vh;
+overflow:auto;
+background:#191a1e;
+border:1px solid #34353a;
+border-radius:18px;
+padding:20px;
+color:white;
+}
+
+.aura-input{
+width:100%;
+box-sizing:border-box;
+background:#101114;
+border:1px solid #383940;
+color:white;
+padding:11px;
+border-radius:9px;
+margin-top:8px;
+}
+
+.aura-primary{
+border:0;
+background:white;
+color:#111;
+padding:10px 14px;
+border-radius:9px;
+cursor:pointer;
+margin-top:10px;
+}
+
+.aura-item{
+padding:10px;
+border-bottom:1px solid #2d2e33;
+display:flex;
+justify-content:space-between;
+gap:8px;
+}
+
+@media(max-width:700px){
+
+#auraSide{
+width:85%;
+}
+
+#auraMenu{
+left:8px;
+right:8px;
+width:auto;
+}
+
+}
+
+</style>
+
+<div id="auraSide">
+
+<div id="auraSideHead">
+
+<button onclick="auraNewChat()">＋ Yeni sohbet</button>
+
+<button onclick="auraToggleSide()">×</button>
+
+</div>
+
+<div id="auraChats"></div>
+
+<div id="auraBottom">
+
+<button id="auraToolsButton" onclick="auraToggleMenu()">
+⚙ Araçlar
+</button>
+
+</div>
+
+</div>
+
+
+<div id="auraMenu">
+
+<button class="aura-tool" onclick="auraScheduled()">
+<span class="aura-tool-icon">⏰</span>
+<span>Zamanlanmış</span>
+</button>
+
+<button class="aura-tool" onclick="auraLibrary()">
+<span class="aura-tool-icon">📚</span>
+<span>Kitaplık</span>
+</button>
+
+<button class="aura-tool" onclick="auraVisual()">
+<span class="aura-tool-icon">📊</span>
+<span>Görselleştirme</span>
+</button>
+
+<button class="aura-tool" onclick="auraProjects()">
+<span class="aura-tool-icon">📁</span>
+<span>Projeler</span>
+</button>
+
+<button class="aura-tool" onclick="auraWeb()">
+<span class="aura-tool-icon">🌐</span>
+<span>Web'de ara</span>
+</button>
+
+<button class="aura-tool" onclick="auraResearch()">
+<span class="aura-tool-icon">🔎</span>
+<span>Derin araştırma</span>
+</button>
+
+<button class="aura-tool" onclick="auraGithub()">
+<span class="aura-tool-icon">◉</span>
+<span>GitHub</span>
+</button>
+
+<button class="aura-tool" onclick="auraVoice()">
+<span class="aura-tool-icon">🎤</span>
+<span>Sesli konuş</span>
+</button>
+
+</div>
+
+
+<div id="auraModal">
+
+<div id="auraModalBox">
+
+<h3 id="auraModalTitle"></h3>
+
+<div id="auraModalContent"></div>
+
+<div style="text-align:right;margin-top:15px">
+
+<button class="aura-primary"
+onclick="auraCloseModal()">
+Kapat
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+(function(){
+
+let currentAuraChat=null;
+
+window.auraToggleSide=function(){
+
+document.getElementById("auraSide").classList.toggle("open");
+
+};
+
+window.auraToggleMenu=function(){
+
+document.getElementById("auraMenu").classList.toggle("open");
+
+};
+
+window.auraCloseModal=function(){
+
+document.getElementById("auraModal").classList.remove("open");
+
+};
+
+function modal(title,html){
+
+document.getElementById("auraModalTitle").textContent=title;
+
+document.getElementById("auraModalContent").innerHTML=html;
+
+document.getElementById("auraModal").classList.add("open");
+
+}
+
+function safe(x){
+
+let d=document.createElement("div");
+
+d.textContent=x||"";
+
+return d.innerHTML;
+
+}
+
+
+async function loadChats(){
+
+try{
+
+let r=await fetch("/aura/features/chats");
+
+let data=await r.json();
+
+let list=document.getElementById("auraChats");
+
+list.innerHTML="";
+
+let chats=Object.values(data);
+
+if(!chats.length){
+
+await auraNewChat();
+
+return;
+
+}
+
+chats.sort((a,b)=>(b.created||0)-(a.created||0));
+
+for(const chat of chats){
+
+let row=document.createElement("div");
+
+row.className="aura-chat";
+
+row.innerHTML=`
+
+<span>💬</span>
+
+<span class="aura-chat-name">
+${safe(chat.title||"Yeni sohbet")}
+</span>
+
+<button class="aura-chat-btn">✎</button>
+`;
+
+row.onclick=()=>auraOpenChat(chat.id);
+
+row.querySelector("button").onclick=(e)=>{
+
+e.stopPropagation();
+
+auraRename(chat.id,chat.title);
+
+};
+
+list.appendChild(row);
+
+}
+
+currentAuraChat=chats[0].id;
+
+}catch(e){
+
+console.log("Aura sohbetleri:",e);
+
+}
+
+}
+
+
+window.auraNewChat=async function(){
+
+let r=await fetch("/aura/chat/new",{
+method:"POST"
+});
+
+let chat=await r.json();
+
+currentAuraChat=chat.id;
+
+await loadChats();
+
+auraClearChat();
+
+};
+
+
+window.auraOpenChat=async function(id){
+
+let r=await fetch("/aura/features/chat/"+id);
+
+let chat=await r.json();
+
+if(!chat.id)return;
+
+currentAuraChat=id;
+
+auraClearChat();
+
+if(typeof addMessage==="function"){
+
+for(const m of chat.messages||[]){
+
+if(m.user)addMessage(m.user,"user");
+
+if(m.ai)addMessage(m.ai,"ai");
+
+}
+
+}
+
+document.getElementById("auraSide").classList.remove("open");
+
+};
+
+
+function auraClearChat(){
+
+let box=document.getElementById("chat");
+
+if(box)box.innerHTML="";
+
+}
+
+
+window.auraRename=async function(id,title){
+
+let name=prompt("Sohbet adı:",title||"Yeni sohbet");
+
+if(!name)return;
+
+await fetch("/aura/features/chat/"+id,{
+method:"PUT",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({title:name})
+});
+
+loadChats();
+
+};
+
+
+window.auraScheduled=async function(){
+
+document.getElementById("auraMenu").classList.remove("open");
+
+let r=await fetch("/aura/schedule");
+
+let list=await r.json();
+
+let html=`
+
+<button class="aura-primary"
+onclick="auraNewSchedule()">
+＋ Yeni görev
+</button>
+
+<div style="margin-top:15px">
+`;
+
+if(!list.length){
+
+html+="<p style='color:#888'>Zamanlanmış görev yok.</p>";
+
+}
+
+for(const x of list){
+
+html+=`
+
+<div class="aura-item">
+
+<span>
+⏰ ${safe(x.title)}
+<br>
+<small style="color:#888">
+${safe(x.date)} ${safe(x.time)}
+</small>
+</span>
+
+</div>
+
+`;
+
+}
+
+html+="</div>";
+
+modal("⏰ Zamanlanmış",html);
+
+};
+
+
+window.auraNewSchedule=async function(){
+
+let title=prompt("Görev:");
+
+if(!title)return;
+
+let date=prompt("Tarih (YYYY-MM-DD):")||"";
+
+let time=prompt("Saat (HH:MM):")||"";
+
+await fetch("/aura/schedule",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+title:title,
+date:date,
+time:time
+})
+});
+
+auraScheduled();
+
+};
+
+
+window.auraProjects=async function(){
+
+document.getElementById("auraMenu").classList.remove("open");
+
+let r=await fetch("/aura/project");
+
+let list=await r.json();
+
+let html=`
+
+<button class="aura-primary"
+onclick="auraNewProject()">
+＋ Yeni proje
+</button>
+
+<div style="margin-top:15px">
+`;
+
+if(!list.length){
+
+html+="<p style='color:#888'>Proje yok.</p>";
+
+}
+
+for(const p of list){
+
+html+=`
+
+<div class="aura-item">
+
+<span>
+📁 <b>${safe(p.name)}</b>
+<br>
+<small style="color:#888">
+${safe(p.description)}
+</small>
+</span>
+
+</div>
+
+`;
+
+}
+
+html+="</div>";
+
+modal("📁 Projeler",html);
+
+};
+
+
+window.auraNewProject=async function(){
+
+let name=prompt("Proje adı:");
+
+if(!name)return;
+
+let description=prompt("Açıklama:")||"";
+
+await fetch("/aura/project",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+name:name,
+description:description
+})
+});
+
+auraProjects();
+
+};
+
+
+window.auraLibrary=async function(){
+
+document.getElementById("auraMenu").classList.remove("open");
+
+let r=await fetch("/aura/features/library");
+
+let list=await r.json();
+
+let html=`
+
+<input class="aura-input"
+type="file"
+id="auraLibraryFile">
+
+<button class="aura-primary"
+onclick="auraUploadFile()">
+Dosya yükle
+</button>
+
+<div style="margin-top:15px">
+`;
+
+if(!list.length){
+
+html+="<p style='color:#888'>Kitaplık boş.</p>";
+
+}
+
+for(const f of list){
+
+html+=`
+
+<div class="aura-item">
+📄 ${safe(f.name)}
+</div>
+
+`;
+
+}
+
+html+="</div>";
+
+modal("📚 Kitaplık",html);
+
+};
+
+
+window.auraUploadFile=async function(){
+
+let input=document.getElementById("auraLibraryFile");
+
+if(!input || !input.files.length)return;
+
+let fd=new FormData();
+
+fd.append("file",input.files[0]);
+
+await fetch("/aura/features/library/upload",{
+method:"POST",
+body:fd
+});
+
+auraLibrary();
+
+};
+
+
+window.auraVisual=function(){
+
+document.getElementById("auraMenu").classList.remove("open");
+
+modal(
+"📊 Görselleştirme",
+`
+<p style="color:#999">
+Ne görselleştirmek istiyorsun?
+</p>
+
+<textarea
+class="aura-input"
+id="auraVisualInput"
+rows="4"
+placeholder="Örn: Aylık satışları grafik yap">
+</textarea>
+
+<button class="aura-primary"
+onclick="auraSendVisual()">
+Oluştur
+</button>
+`
+);
+
+};
+
+
+window.auraSendVisual=function(){
+
+let x=document.getElementById("auraVisualInput");
+
+if(!x || !x.value.trim())return;
+
+auraCloseModal();
+
+let input=document.getElementById("message");
+
+if(input){
+
+input.value="Bu isteği görselleştir: "+x.value;
+
+let form=input.closest("form");
+
+if(form)form.requestSubmit();
+
+}
+
+};
+
+
+window.auraWeb=function(){
+
+document.getElementById("auraMenu").classList.remove("open");
+
+if(typeof toggleWebSearch==="function"){
+
+toggleWebSearch();
+
+}
+
+};
+
+
+window.auraResearch=function(){
+
+document.getElementById("auraMenu").classList.remove("open");
+
+if(typeof toggleDeepResearch==="function"){
+
+toggleDeepResearch();
+
+}
+
+};
+
+
+window.auraGithub=function(){
+
+document.getElementById("auraMenu").classList.remove("open");
+
+if(typeof toggleGithub==="function"){
+
+toggleGithub();
+
+}
+
+};
+
+
+window.auraVoice=function(){
+
+document.getElementById("auraMenu").classList.remove("open");
+
+if(typeof startVoice==="function"){
+
+startVoice();
+
+}
+
+};
+
+
+/* Sol menüyü açacak düğme */
+let openButton=document.createElement("button");
+
+openButton.textContent="☰";
+
+openButton.style.cssText=
+"position:fixed;left:12px;top:12px;z-index:9997;border:0;background:#25262b;color:white;border-radius:9px;padding:9px 12px;cursor:pointer";
+
+openButton.onclick=auraToggleSide;
+
+document.body.appendChild(openButton);
+
+
+/* Başlangıç */
+
+window.addEventListener("load",function(){
+
+loadChats();
+
+});
+
+})();
+
+</script>
+
+<script>
+(function(){
+    function auraWebStatus(){
+        var buttons=document.querySelectorAll("button");
+        buttons.forEach(function(b){
+            var text=(b.innerText||"").toLowerCase();
+            if(text.includes("web'de ara") || text.includes("webde ara")){
+                if(!b.dataset.auraWebStatus){
+                    b.dataset.auraWebStatus="1";
+                    b.addEventListener("click",function(){
+                        this.classList.toggle("aura-web-active");
+                        if(this.classList.contains("aura-web-active")){
+                            this.innerText="✓ Web arama aktif";
+                        }else{
+                            this.innerText="Web'de ara";
+                        }
+                    });
+                }
+            }
+        });
+    }
+    setInterval(auraWebStatus,1000);
+})();
+</script>
+
 </body>
 
 <script>
@@ -1625,6 +2474,371 @@ async function playNextSpeech() {
     }
 }
 
+
+/* AURA AUTO CHAT SAVE */
+(function(){
+    if(window.__auraAutoSaveInstalled) return;
+    window.__auraAutoSaveInstalled=true;
+
+    const oldFetch=window.fetch;
+
+    window.fetch=async function(){
+        const args=arguments;
+        const response=await oldFetch.apply(this,args);
+
+        try{
+            const url=String(args[0] || "");
+
+            if(url.endsWith("/chat") && response.ok){
+                const clone=response.clone();
+                const data=await clone.json();
+
+                let text="";
+                try{
+                    const opts=args[1] || {};
+                    if(opts.body){
+                        const sent=typeof opts.body==="string" ? JSON.parse(opts.body) : opts.body;
+                        text=String(sent.message || "").trim();
+                    }
+                }catch(e){}
+
+                if(!text){
+                    const input=document.getElementById("message");
+                    text=input ? input.value.trim() : "";
+                }
+
+                const chatId=window.currentChatId ||
+                    window.auraCurrentChatId ||
+                    sessionStorage.getItem("aura_current_chat");
+
+                if(chatId && text && data && data.response){
+                    await oldFetch("/aura/chat/"+encodeURIComponent(chatId)+"/message",{
+                        method:"POST",
+                        headers:{"Content-Type":"application/json"},
+                        body:JSON.stringify({
+                            user:text,
+                            ai:data.response
+                        })
+                    });
+                }
+            }
+        }catch(e){
+            console.log("Aura kayıt:",e);
+        }
+
+        return response;
+    };
+})();
+
+
+/* AURA_RESTORE_LAST_CHAT */
+(function(){
+    if(window.__auraRestoreInstalled) return;
+    window.__auraRestoreInstalled=true;
+
+    async function restore(){
+        try{
+            const id=sessionStorage.getItem("aura_current_chat");
+            if(!id) return;
+
+            if(typeof auraOpenChat==="function"){
+                await auraOpenChat(id);
+            }
+        }catch(e){
+            console.log("Aura sohbet geri yükleme:",e);
+        }
+    }
+
+    if(document.readyState==="loading"){
+        document.addEventListener("DOMContentLoaded",restore,{once:true});
+    }else{
+        setTimeout(restore,300);
+    }
+})();
+
+
+/* AURA_CHAT_LIST_FIX */
+(function(){
+    if(window.__auraChatListFix) return;
+    window.__auraChatListFix=true;
+
+    window.loadAuraChats=async function(){
+        const box=document.getElementById("auraChats");
+        if(!box) return;
+
+        try{
+            const r=await fetch("/aura/features/chats");
+            if(!r.ok) throw new Error("chats: "+r.status);
+
+            const chats=await r.json();
+            box.innerHTML="";
+
+            const list=Array.isArray(chats)
+                ? chats
+                : Object.entries(chats || {}).map(([id,c])=>({
+                    id:id,
+                    ...c
+                }));
+
+            if(!list.length){
+                box.innerHTML='<div style="padding:12px;opacity:.6">Henüz sohbet yok</div>';
+                return;
+            }
+
+            list.reverse().forEach(c=>{
+                const id=c.id || c.chat_id;
+                const title=c.title || "Yeni sohbet";
+
+                const item=document.createElement("button");
+                item.type="button";
+                item.textContent=title;
+                item.style.cssText=
+                    "display:block;width:100%;text-align:left;padding:10px;border:0;background:transparent;color:inherit;border-radius:8px;cursor:pointer;";
+
+                item.onclick=async()=>{
+                    window.currentChatId=id;
+                    sessionStorage.setItem("aura_current_chat",id);
+
+                    if(typeof auraOpenChat==="function"){
+                        await auraOpenChat(id);
+                    }
+                };
+
+                box.appendChild(item);
+            });
+        }catch(e){
+            console.error("Aura sohbet listesi:",e);
+        }
+    };
+
+    setTimeout(()=>{
+        if(typeof loadAuraChats==="function") loadAuraChats();
+    },500);
+})();
+
+
+/* AURA_RESTORE_MESSAGES */
+(function(){
+    if(window.__auraRestoreMessages) return;
+    window.__auraRestoreMessages=true;
+
+    window.auraLoadMessages=async function(id){
+        if(!id) return;
+
+        try{
+            const r=await fetch("/aura/features/chat/"+encodeURIComponent(id));
+            if(!r.ok) return;
+
+            const chat=await r.json();
+            const messages=chat.messages || [];
+
+            const area=document.getElementById("chat");
+            if(!area) return;
+
+            messages.forEach(m=>{
+                if(typeof addMessage==="function"){
+                    addMessage("user",m.user || "");
+                    addMessage("assistant",m.ai || "");
+                }
+            });
+        }catch(e){
+            console.log("Aura mesaj geri yükleme:",e);
+        }
+    };
+
+    const oldOpen=window.auraOpenChat;
+
+    window.auraOpenChat=async function(id){
+        window.currentChatId=id;
+        sessionStorage.setItem("aura_current_chat",id);
+
+        if(typeof oldOpen==="function"){
+            try{ await oldOpen(id); }catch(e){}
+        }
+
+        await window.auraLoadMessages(id);
+    };
+})();
+
+
+/* AURA_MESSAGE_RESTORE_GUARD */
+(function(){
+    if(window.__auraRestoreGuard) return;
+    window.__auraRestoreGuard=true;
+
+    window.__auraClearBeforeRestore=function(){
+        const selectors=[
+            "#chat",
+            "#messages",
+            ".messages",
+            "#chatMessages"
+        ];
+
+        for(const sel of selectors){
+            const el=document.querySelector(sel);
+            if(el){
+                el.innerHTML="";
+                break;
+            }
+        }
+    };
+})();
+
+
+/* AURA_AUTO_CHAT_ID */
+(function(){
+    if(window.__auraAutoChatId) return;
+    window.__auraAutoChatId=true;
+
+    async function ensureChat(){
+        if(window.currentChatId) return window.currentChatId;
+
+        const saved=sessionStorage.getItem("aura_current_chat");
+        if(saved){
+            window.currentChatId=saved;
+            return saved;
+        }
+
+        try{
+            const r=await fetch("/aura/chat/new",{
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body:"{}"
+            });
+            const d=await r.json();
+            const id=d.id || d.chat_id;
+
+            if(id){
+                window.currentChatId=id;
+                sessionStorage.setItem("aura_current_chat",id);
+                if(typeof loadAuraChats==="function") loadAuraChats();
+                return id;
+            }
+        }catch(e){
+            console.error("Aura chat oluşturma:",e);
+        }
+
+        return null;
+    }
+
+    window.auraEnsureChat=ensureChat;
+})();
+
+
+/* AURA_STARTUP */
+(function(){
+    if(window.__auraStartup) return;
+    window.__auraStartup=true;
+
+    async function startAura(){
+        try{
+            if(typeof auraEnsureChat==="function"){
+                await auraEnsureChat();
+            }
+
+            if(typeof loadAuraChats==="function"){
+                await loadAuraChats();
+            }
+
+            const id=window.currentChatId ||
+                     sessionStorage.getItem("aura_current_chat");
+
+            if(id && typeof auraLoadMessages==="function"){
+                const area=document.querySelector(
+                    "#chat,#messages,.messages,#chatMessages"
+                );
+
+                if(area && !area.dataset.auraLoaded){
+                    area.dataset.auraLoaded="1";
+                    await auraLoadMessages(id);
+                }
+            }
+        }catch(e){
+            console.log("Aura başlangıç:",e);
+        }
+    }
+
+    setTimeout(startAura,700);
+})();
+
+
+/* AURA_VISUAL_UI */
+window.auraMakeChart=async function(){
+    const raw=prompt("Sayıları virgülle ayırarak yaz:");
+    if(!raw) return;
+
+    const values=raw.split(",").map(x=>Number(x.trim())).filter(x=>Number.isFinite(x));
+
+    if(!values.length){
+        alert("Geçerli sayı bulunamadı.");
+        return;
+    }
+
+    try{
+        const r=await fetch("/visualize",{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({values:values})
+        });
+
+        const d=await r.json();
+
+        if(!d.svg){
+            alert(d.error || "Grafik oluşturulamadı.");
+            return;
+        }
+
+        const w=window.open("","_blank");
+        if(w){
+            w.document.write(
+                "<html><body style='margin:0;padding:20px;font-family:sans-serif'>"+
+                d.svg+
+                "</body></html>"
+            );
+            w.document.close();
+        }
+    }catch(e){
+        alert("Grafik oluşturulamadı.");
+    }
+};
+
+
+/* AURA_WEB_RESULTS_UI */
+(function(){
+    if(window.__auraWebUI) return;
+    window.__auraWebUI=true;
+
+    window.auraWebSearch=async function(){
+        const q=prompt("Web'de ne arayayım?");
+        if(!q || !q.trim()) return;
+
+        try{
+            const r=await fetch("/chat",{
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({
+                    message:q.trim(),
+                    web_search:true
+                })
+            });
+
+            const d=await r.json();
+            const result=d.response || "Sonuç bulunamadı.";
+
+            const box=document.createElement("div");
+            box.style.cssText=
+                "margin:12px;padding:14px;border:1px solid #ccc;border-radius:12px;white-space:pre-wrap;";
+
+            box.textContent=result;
+
+            const chat=document.querySelector("#chat,#messages,.messages,#chatMessages");
+            if(chat) chat.appendChild(box);
+        }catch(e){
+            alert("Web araması başarısız.");
+        }
+    };
+})();
+
 </script>
 </html>
 """
@@ -1685,6 +2899,33 @@ def math_expression(message):
 
     allowed = "0123456789+-*/().% "
     return "".join(c for c in text if c in allowed)
+
+
+def ask_ollama(prompt, thinking=False):
+    """Yerel Ollama modeli."""
+    try:
+        import requests
+
+        r = requests.post(
+            "http://127.0.0.1:11434/api/generate",
+            json={
+                "model": "llama3.2:1b",
+                "prompt": str(prompt),
+                "stream": False
+            },
+            timeout=120
+        )
+
+        if r.status_code != 200:
+            return "Yerel yapay zeka hatası: HTTP " + str(r.status_code)
+
+        data = r.json()
+        answer = data.get("response", "").strip()
+
+        return answer or "Yanıt alınamadı."
+
+    except Exception as e:
+        return "Yerel yapay zeka çalışmıyor: " + str(e)
 
 def ask_groq(message, thinking=False):
 
@@ -1966,6 +3207,55 @@ def chat():
         return jsonify({
             "response": "Bir hata oluştu: " + str(e)
         }), 500
+
+
+# AURA_FEATURES_REGISTERED
+try:
+    from aura_features.aura_api import api as aura_features_api
+    app.register_blueprint(aura_features_api)
+    print("Aura Features aktif")
+except Exception as e:
+    print("Aura Features yüklenemedi:",e)
+
+
+@app.route("/visualize", methods=["POST"])
+def visualize():
+    try:
+        data=request.get_json() or {}
+        values=data.get("values",[])
+        labels=data.get("labels",[])
+
+        values=[float(x) for x in values]
+        labels=[str(x) for x in labels]
+
+        if not values:
+            return jsonify({"error":"Veri bulunamadı"}),400
+
+        if len(labels)!=len(values):
+            labels=[str(i+1) for i in range(len(values))]
+
+        svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">'
+        svg+='<rect width="800" height="450" fill="white"/>'
+
+        mx=max(abs(x) for x in values) or 1
+        barw=min(80,700/max(len(values),1))
+        gap=20
+
+        for i,v in enumerate(values):
+            x=50+i*(barw+gap)
+            h=abs(v)/mx*330
+            y=380-h
+
+            svg+=f'<rect x="{x}" y="{y}" width="{barw}" height="{h}" fill="#4f46e5"/>'
+            svg+=f'<text x="{x+barw/2}" y="405" text-anchor="middle" font-size="14">{labels[i]}</text>'
+            svg+=f'<text x="{x+barw/2}" y="{max(20,y-8)}" text-anchor="middle" font-size="13">{v:g}</text>'
+
+        svg+='</svg>'
+
+        return jsonify({"svg":svg})
+
+    except Exception as e:
+        return jsonify({"error":str(e)}),400
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000)
