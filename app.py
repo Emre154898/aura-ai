@@ -926,6 +926,32 @@ pre code{
     100%{transform:scale(1.35);opacity:0}
 }
 </style>
+
+<style id="AURA_HIDE_3LINES_FINAL">
+/* Sadece hamburger/3 çizgi butonu */
+.aura-hamburger,
+.hamburger-button,
+#hamburger-button,
+#menu-toggle,
+#sidebar-toggle {
+    display:none !important;
+}
+</style>
+
+<style id="AURA_HIDE_3LINE_V4">
+#aura-menu,
+#auraMenu,
+#menu-btn,
+#menuBtn,
+#hamburger,
+.hamburger,
+.hamburger-btn,
+.menu-toggle {
+    display:none !important;
+}
+</style>
+
+
 </head>
 
 <body>
@@ -1450,7 +1476,6 @@ padding:10px;
 border-top:1px solid #292a2f;
 }
 
-#auraToolsButton{
 width:100%;
 border:0;
 background:#25262b;
@@ -1585,9 +1610,7 @@ width:auto;
 
 <div id="auraBottom">
 
-<button id="auraToolsButton" onclick="auraToggleMenu()">
-⚙ Araçlar
-</button>
+
 
 </div>
 
@@ -2166,7 +2189,6 @@ startVoice();
 /* Sol menüyü açacak düğme */
 let openButton=document.createElement("button");
 
-openButton.textContent="☰";
 
 openButton.style.cssText=
 "position:fixed;left:12px;top:12px;z-index:9997;border:0;background:#25262b;color:white;border-radius:9px;padding:9px 12px;cursor:pointer";
@@ -2187,32 +2209,6 @@ loadChats();
 })();
 
 </script>
-
-<script>
-(function(){
-    function auraWebStatus(){
-        var buttons=document.querySelectorAll("button");
-        buttons.forEach(function(b){
-            var text=(b.innerText||"").toLowerCase();
-            if(text.includes("web'de ara") || text.includes("webde ara")){
-                if(!b.dataset.auraWebStatus){
-                    b.dataset.auraWebStatus="1";
-                    b.addEventListener("click",function(){
-                        this.classList.toggle("aura-web-active");
-                        if(this.classList.contains("aura-web-active")){
-                            this.innerText="✓ Web arama aktif";
-                        }else{
-                            this.innerText="Web'de ara";
-                        }
-                    });
-                }
-            }
-        });
-    }
-    setInterval(auraWebStatus,1000);
-})();
-</script>
-
 </body>
 
 <script>
@@ -2900,33 +2896,6 @@ def math_expression(message):
     allowed = "0123456789+-*/().% "
     return "".join(c for c in text if c in allowed)
 
-
-def ask_ollama(prompt, thinking=False):
-    """Yerel Ollama modeli."""
-    try:
-        import requests
-
-        r = requests.post(
-            "http://127.0.0.1:11434/api/generate",
-            json={
-                "model": "llama3.2:1b",
-                "prompt": str(prompt),
-                "stream": False
-            },
-            timeout=120
-        )
-
-        if r.status_code != 200:
-            return "Yerel yapay zeka hatası: HTTP " + str(r.status_code)
-
-        data = r.json()
-        answer = data.get("response", "").strip()
-
-        return answer or "Yanıt alınamadı."
-
-    except Exception as e:
-        return "Yerel yapay zeka çalışmıyor: " + str(e)
-
 def ask_groq(message, thinking=False):
 
     recent_history = history[-10:]
@@ -3128,16 +3097,36 @@ def home():
 
 @app.route("/chat", methods=["POST"])
 def chat():
+    data = request.get_json(silent=True) or {}
+    message = str(data.get("message", "")).strip()
+    lower = message.lower()
+
+    if lower in ["saat kaç", "saat kac", "şu an saat kaç", "su an saat kac", "şimdi saat kaç", "simdi saat kac", "saat kaç?"]:
+        from datetime import datetime
+        from zoneinfo import ZoneInfo
+        now = datetime.now(ZoneInfo("Europe/Istanbul"))
+        return jsonify({"response": f"Türkiye'de şu an saat {now.strftime("%H:%M")}."})
+
+    message = str(data.get("message", "")).strip()
+
+    # Saat cevabı tamamen Python'dan gelir
+    if lower in {
+        "saat kaç", "saat kac",
+        "şu an saat kaç", "su an saat kac",
+        "şimdi saat kaç", "simdi saat kac"
+    }:
+        from datetime import datetime
+        from zoneinfo import ZoneInfo
+        now = datetime.now(ZoneInfo("Europe/Istanbul"))
+        return jsonify({"response": "Türkiye'de şu an saat " + now.strftime("%H:%M") + "."})
+
 
     try:
-        data = request.get_json()
-        message = data.get("message", "")
         thinking = data.get("thinking", False)
 
         if not message:
             return jsonify({"response": "Bir mesaj yaz."})
 
-        lower = message.lower()
 
         # Doğal dil görev ekleme
         task_words = ["hatırlat", "görev ekle", "görev oluştur", "unutma", "yapılacak"]
